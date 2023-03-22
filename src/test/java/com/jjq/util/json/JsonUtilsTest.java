@@ -3,11 +3,10 @@ package com.jjq.util.json;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import lombok.SneakyThrows;
+import com.jjq.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 
 /**

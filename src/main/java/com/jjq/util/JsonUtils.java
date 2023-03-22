@@ -1,6 +1,5 @@
-package com.jjq.util.json;
+package com.jjq.util;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
@@ -9,7 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.jjq.util.core.TimePattern;
+import com.jjq.util.core.TemporalFormatPattern;
 import lombok.SneakyThrows;
 
 import java.text.SimpleDateFormat;
@@ -39,17 +38,17 @@ public class JsonUtils {
         // 反序列化时，遇到不认识的字段将跳过
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         //设置java.lang.Date的序列化和反序列化的格式
-        objectMapper.setDateFormat(new SimpleDateFormat(TimePattern.P1));
+        objectMapper.setDateFormat(new SimpleDateFormat(TemporalFormatPattern.P1));
         //设置 java.time.LocalDateTime 的序列化器和反序列化器
         javaTimeModule.addSerializer(LocalDateTime.class,
-                new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(TimePattern.P1)));
+                new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(TemporalFormatPattern.P1)));
         javaTimeModule.addDeserializer(LocalDateTime.class,
-                new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(TimePattern.P1)));
+                new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(TemporalFormatPattern.P1)));
         //设置 java.time.LocalDate 的序列化器和反序列化器
         javaTimeModule.addSerializer(LocalDate.class,
-                new LocalDateSerializer(DateTimeFormatter.ofPattern(TimePattern.P2)));
+                new LocalDateSerializer(DateTimeFormatter.ofPattern(TemporalFormatPattern.P2)));
         javaTimeModule.addDeserializer(LocalDate.class,
-                new LocalDateDeserializer(DateTimeFormatter.ofPattern(TimePattern.P2)));
+                new LocalDateDeserializer(DateTimeFormatter.ofPattern(TemporalFormatPattern.P2)));
         //注册到objectMapper中
         objectMapper.registerModule(javaTimeModule);
     }

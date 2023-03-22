@@ -6,7 +6,7 @@ package com.jjq.util.core;
  * @date 2023/3/12
  * @desc
  */
-public class TimePattern {
+public class TemporalFormatPattern {
 
     /**
      * yyyy-MM-dd HH:mm:ss
