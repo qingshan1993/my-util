@@ -13,4 +13,20 @@ public class TemporalUtils {
 
 
 
+    public static class LocalDateTime {
+
+    }
+
+    public static class LocalDate {
+
+    }
+
+    public static class YearMonth {
+
+    }
+
+    public static class Year {
+
+    }
+
 }

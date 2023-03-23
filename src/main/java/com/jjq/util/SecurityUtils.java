@@ -1,7 +1,5 @@
 package com.jjq.util;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.security.*;
@@ -36,9 +34,9 @@ public class SecurityUtils {
         byte[] publicKeyEncoded = publicKey.getEncoded();
         byte[] privateKeyEncoded = privateKey.getEncoded();
         // 进行Base64编码
-        String publicKeyString = Base64.encode(publicKeyEncoded);
+        String publicKeyString = base64Encode(publicKeyEncoded);
         System.out.println("publicKey:" + publicKeyString);
-        String privateKeyString = Base64.encode(privateKeyEncoded);
+        String privateKeyString = base64Encode(privateKeyEncoded);
         System.out.println("privateKey:" + privateKeyString);
     }
 
@@ -53,7 +51,7 @@ public class SecurityUtils {
      */
     public static PublicKey loadPublicKeyFromString(String algorithm, String keyString) throws Exception {
         // 进行Base64解码
-        byte[] decode = Base64.decode(keyString);
+        byte[] decode = base64Decode(keyString);
         // 获取密钥工厂
         KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
         // 构建密钥规范
@@ -61,6 +59,13 @@ public class SecurityUtils {
         // 获取公钥
         return keyFactory.generatePublic(keyspec);
 
+    }
+
+    private static byte[] base64Decode(String keyStr) {
+        return java.util.Base64.getDecoder().decode(keyStr.getBytes());
+    }
+    private static String base64Encode(byte[] bytes) {
+        return java.util.Base64.getEncoder().encodeToString(bytes);
     }
 
     /**
@@ -73,7 +78,7 @@ public class SecurityUtils {
      */
     public static PrivateKey loadPrivateKeyFromString(String algorithm, String keyString) throws Exception {
         // 进行Base64解码
-        byte[] decode = Base64.decode(keyString);
+        byte[] decode = base64Decode(keyString);
         // 获取密钥工厂
         KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
         // 构建密钥规范
@@ -136,7 +141,7 @@ public class SecurityUtils {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         decodeByte(maxEncryptSize, cipher, data, total, baos);
         // 对密文进行Base64编码
-        return Base64.encode(baos.toByteArray());
+        return base64Encode(baos.toByteArray());
 
     }
 
@@ -156,7 +161,7 @@ public class SecurityUtils {
         // 初始化模式(解密)和密钥
         cipher.init(Cipher.DECRYPT_MODE, key);
         // 由于密文进行了Base64编码, 在这里需要进行解码
-        byte[] data = Base64.decode(encrypted);
+        byte[] data = base64Decode(encrypted);
         // 总数据长度
         int total = data.length;
         // 输出流
